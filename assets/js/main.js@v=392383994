@@ -1,0 +1,436 @@
+(() => {
+  // src/js/_components/store/cart-store.js
+  var CartStore = class extends HTMLElement {
+    constructor() {
+      super();
+      this.state = {};
+      this.init();
+    }
+    async init() {
+      await this.getCart();
+    }
+    async getCart() {
+      const response = await fetch("/actions/commerce/cart/get-cart", {
+        headers: { "Accept": "application/json" }
+      });
+      const data = await response.json();
+      this.state = data.cart;
+      this.dispatchEvent(new CustomEvent("stateChange", { detail: data.cart }));
+      return response;
+    }
+    async updateCart(formData) {
+      const response = await fetch("/actions/commerce/cart/update-cart", {
+        credentials: "include",
+        method: "post",
+        headers: { "Accept": "application/json" },
+        body: formData
+      });
+      await this.getCart();
+      return response;
+    }
+    async removeLineItem(id) {
+      const lineItem = this.state.lineItems.find((lineItem2) => lineItem2.id == id);
+      const formData = new FormData();
+      formData.append(
+        `lineItems[${lineItem.id}][qty]`,
+        lineItem.qty - 1
+      );
+      formData.append(
+        this.getAttribute("crsf-token-name"),
+        this.getAttribute("crsf-token")
+      );
+      const response = await this.updateCart(formData);
+      return response;
+    }
+  };
+
+  // src/js/_components/store/product-store.js
+  var ProductStore = class extends HTMLElement {
+    constructor() {
+      super();
+      this.state = {};
+      this.init();
+    }
+    async init() {
+      await this.getProducts();
+    }
+    async getProducts() {
+      const response = await fetch("/api", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          query: `{
+                    products {
+                        ... on softGoods_Product {
+                            id
+                            thumbnail {
+                                url @transform(handle: "squareThumb")
+                            }
+                        }
+                    }
+                }`
+        })
+      });
+      const data = await response.json();
+      this.state.products = data.data.products;
+      this.dispatchEvent(new CustomEvent("stateChange", { detail: this.state }));
+    }
+    getProductById(id) {
+      return this.state.products.find((product) => product.id == id);
+    }
+  };
+
+  // src/js/_components/file-preview.js
+  var FilePreview = class extends HTMLElement {
+    constructor() {
+      super();
+      this.init();
+    }
+    init() {
+      switch (this.getAttribute("type")) {
+        case "image":
+          const img = document.createElement("img");
+          img.src = this.getAttribute("preview-src");
+          this.appendChild(img);
+          break;
+        case "video":
+          const video = document.createElement("video");
+          video.src = `${this.getAttribute("url")}#t=0.1`;
+          video.controls = true;
+          video.preload = "metadata";
+          this.appendChild(video);
+          video.addEventListener("pause", () => {
+            if (!video.seeking) {
+              this.classList.remove("is-expanded");
+            }
+          });
+          video.addEventListener("play", () => {
+            this.classList.add("is-expanded");
+          });
+          break;
+        case "audio":
+          const audio = document.createElement("audio");
+          audio.src = this.getAttribute("url");
+          audio.controls = true;
+          this.appendChild(audio);
+          break;
+      }
+      this.addEventListener("click", () => {
+        switch (this.getAttribute("type")) {
+          case "image":
+            const img = this.querySelector("img");
+            img.src = img.src == this.getAttribute("preview-src") ? this.getAttribute("full-src") : this.getAttribute("preview-src");
+            img.addEventListener("load", () => {
+              this.classList.toggle("is-expanded");
+            }, { once: true });
+            break;
+        }
+      });
+      window.addEventListener("resize", () => {
+      });
+    }
+  };
+
+  // src/js/_components/cart/shopping-cart.js
+  var ShoppingCart = class extends HTMLElement {
+    constructor() {
+      super();
+      this.cartStore = document.querySelector("cart-store");
+      this.productStore = document.querySelector("product-store");
+      this.init();
+    }
+    init() {
+      this.setEventListeners();
+    }
+    setEventListeners() {
+      this.cartStore.addEventListener("stateChange", () => {
+        if (this.productStore.state.products) {
+          this.build();
+        } else {
+          this.productStore.addEventListener("stateChange", () => {
+            this.build();
+          });
+        }
+      });
+    }
+    build() {
+      const body = this.querySelector(".ShoppingCart-body");
+      body.innerHTML = "";
+      this.cartStore.state.lineItems.reverse().forEach((lineItem) => {
+        const prodectId = lineItem.snapshot.product.id;
+        const product = this.productStore.getProductById(prodectId);
+        const thumbUrl = product.thumbnail[0].url;
+        for (let i = 0; i < lineItem.qty; i++) {
+          body.innerHTML += `
+                    <line-item
+                        class="LineItem"
+                        data-id="${lineItem.id}"
+                        data-product-id="${lineItem.snapshot.product.id}"
+                        description="${lineItem.description}"
+                        price="${lineItem.priceAsCurrency}"
+                        thumb="${thumbUrl}"
+                    ></line-item>
+                `;
+        }
+      });
+      this.classList.toggle("is-empty", !this.cartStore.state.lineItems.length);
+    }
+  };
+
+  // src/js/_components/cart/line-item.js
+  var LineItem = class extends HTMLElement {
+    constructor() {
+      super();
+      this.cartStore = document.querySelector("cart-store");
+      this.init();
+    }
+    async init() {
+      await this.build();
+      this.setEventListeners();
+    }
+    async build() {
+      this.innerHTML = document.querySelector("template#LineItem").innerHTML;
+      this.querySelector(".LineItem-thumbnail img").src = this.getAttribute("thumb");
+      this.querySelector(".LineItem-description").innerText = this.getAttribute("description");
+      this.querySelector(".LineItem-price").innerText = this.getAttribute("price");
+    }
+    setEventListeners() {
+      this.querySelector(".LineItem-button--remove").addEventListener("click", () => {
+        this.cartStore.removeLineItem(this.dataset.id);
+      });
+    }
+  };
+
+  // src/js/_components/cart/cart-prop.js
+  var CartProp = class extends HTMLElement {
+    constructor() {
+      super();
+      this.cartStore = document.querySelector("cart-store");
+      this.init();
+    }
+    async init() {
+      this.setEventListeners();
+    }
+    setEventListeners() {
+      this.cartStore.addEventListener("stateChange", (e) => {
+        this.innerText = e.detail[this.getAttribute("prop")];
+        console.log(e.detail);
+      });
+    }
+  };
+
+  // src/js/_components/form/product-form.js
+  var ProductForm = class extends HTMLElement {
+    constructor() {
+      super();
+      this.cartStore = document.querySelector("cart-store");
+      this.init();
+    }
+    init() {
+      this.setEventListeners();
+    }
+    setEventListeners() {
+      this.querySelector("button").addEventListener("click", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(this.querySelector("form"));
+        this.cartStore.updateCart(formData);
+      });
+    }
+  };
+
+  // src/js/_components/form/form.js
+  var Form = class extends HTMLElement {
+    /**
+     * Constructor
+     */
+    constructor() {
+      super();
+      this.cartStore = document.querySelector("cart-store");
+    }
+    /**
+     * Submit The Form
+     */
+    async submit() {
+      const formData = new FormData(this.querySelector("form"));
+      const response = await this.cartStore.updateCart(formData);
+      const data = await response.json();
+      if (data.errors && Object.keys(data.errors).length) {
+        this.displayErrors(data.errors);
+        return false;
+      }
+      return true;
+    }
+    /**
+     * Display Errors
+     * @param { Object } errors 
+     */
+    displayErrors(errors) {
+      for (const param in errors) {
+        const paramName = param.split(".").length > 1 ? `${param.split(".")[0]}[${param.split(".")[1]}]` : param;
+        const targetInput = this.querySelector(`[name="${paramName}"]`);
+        const alertElement = targetInput ? targetInput.parentElement.querySelector(".u-alert") : this.querySelector(".u-alert");
+        alertElement.innerText = "* " + errors[param].join(" ");
+      }
+    }
+  };
+
+  // src/js/_components/form/address-form.js
+  var AddressForm = class extends Form {
+    /**
+     * Constructor
+     */
+    constructor() {
+      super();
+      this.shippingForm = document.querySelector("shipping-form");
+      this.init();
+    }
+    /**
+     * Init
+     */
+    init() {
+      const countryCode = this.querySelector('select[name="shippingAddress[countryCode]"]').value;
+      const stateCode = this.querySelector('select[name="shippingAddress[administrativeArea]"]').value;
+      if (countryCode && !stateCode) {
+        this.getStates(countryCode);
+      }
+      this.setEventListeners();
+    }
+    setEventListeners() {
+      [...this.querySelectorAll("input,select")].forEach((input) => {
+        input.addEventListener("change", async () => {
+          const numIncomplete = [...this.querySelectorAll(":required")].filter((el) => !el.value).length;
+          if (numIncomplete < 1) {
+            await this.submit();
+            this.shippingForm.build();
+          }
+        });
+      });
+      this.querySelector('select[name="shippingAddress[countryCode]"]').addEventListener("change", async (e) => {
+        const countryCode = e.target.value;
+        await this.getStates(countryCode);
+      });
+    }
+    async getStates(countryCode) {
+      const request = await fetch(`/actions/address-repo/states?code=${countryCode}`);
+      const states = await request.json();
+      const statesElement = this.querySelector('select[name="shippingAddress[administrativeArea]"]');
+      let html = `<option value="" selected disabled hidden>Select a state/province</option>`;
+      for (const code in states) {
+        html += `<option value="${code}">${states[code]}</option>`;
+      }
+      statesElement.innerHTML = html;
+      statesElement.disabled = false;
+    }
+  };
+
+  // src/js/_components/form/payment-form.js
+  var PaymentForm = class extends Form {
+    /**
+     * Constructor
+     */
+    constructor() {
+      super();
+      this.addressForm = document.querySelector("address-form");
+      this.shippingForm = document.querySelector("shipping-form");
+      this.init();
+    }
+    /**
+     * Init
+     */
+    init() {
+      this.setEventListeners();
+    }
+    setEventListeners() {
+      this.querySelector("form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const shippingSuccess = await this.shippingForm.submit();
+        const addressSuccess = await this.addressForm.submit();
+        if (addressSuccess && shippingSuccess) {
+          this.querySelector("form").submit();
+        }
+      });
+    }
+  };
+
+  // src/js/_components/form/shipping-form.js
+  var ShippingForm = class extends Form {
+    /**
+     * Constructor
+     */
+    constructor() {
+      super();
+      this.init();
+    }
+    /**
+     * Init
+     */
+    init() {
+      this.setEventListeners();
+    }
+    setEventListeners() {
+      this.cartStore.addEventListener("stateChange", (e) => {
+        this.build();
+      });
+    }
+    /**
+     * Update Options
+     */
+    build() {
+      const shippingMethods = this.cartStore.state.availableShippingMethodOptions;
+      this.querySelector(".Box-block").innerHTML = "";
+      for (const handle in shippingMethods) {
+        const shippingMethod = shippingMethods[handle];
+        this.querySelector(".Box-block").innerHTML += `
+                <label>
+                    <input 
+                        type="radio"
+                        name="shippingMethodHandle"
+                        value="${shippingMethod.handle}"
+                        ${this.cartStore.state.shippingMethodHandle == shippingMethod.handle ? "checked" : ""} />
+                    <span><strong>${shippingMethod.name}</strong> ${shippingMethod.priceAsCurrency}</span>
+                </label>
+            `;
+        [...this.querySelectorAll('input[type="radio"]')].forEach((input) => {
+          input.addEventListener("click", () => {
+            this.submit();
+          });
+        });
+      }
+    }
+    /**
+     * Submit The Form
+     */
+    async submit() {
+      const formData = new FormData(this.querySelector("form"));
+      const response = await this.cartStore.updateCart(formData);
+      const data = await response.json();
+      if (!data.cart.shippingMethodHandle) {
+        this.displayErrors();
+        return false;
+      }
+      return true;
+    }
+    /**
+     * Validate
+     * @returns bool
+     */
+    displayErrors() {
+      if (!this.cartStore.shippingMethodHandle) {
+        const alertElement = this.querySelector(".u-alert");
+        alertElement.innerText = "* A shipping method must be selected";
+      }
+    }
+  };
+
+  // src/js/main.js
+  customElements.define("product-store", ProductStore);
+  customElements.define("cart-store", CartStore);
+  customElements.define("file-preview", FilePreview);
+  customElements.define("shopping-cart", ShoppingCart);
+  customElements.define("line-item", LineItem);
+  customElements.define("cart-prop", CartProp);
+  customElements.define("product-form", ProductForm);
+  customElements.define("address-form", AddressForm);
+  customElements.define("shipping-form", ShippingForm);
+  customElements.define("payment-form", PaymentForm);
+})();
