@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="yotsuba-b">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="media\hgbicon.ico" type="image/x-icon"/>
+    <title>@hgb</title>
+    <link rel="stylesheet" href="assets/css/style1.css">
+    <style>
+        #tryAgainMsg {
+            color: red;
+            margin-left: 10px;
+        }
+
+        img {
+            user-drag: none;
+            -webkit-user-drag: none;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <cart-store
+        crsf-token-name="CRAFT_CSRF_TOKEN"
+        crsf-token="zjRWPDiFQJbIUeAfCNMt3oc7nagmvtVuUGAoSMN-I-XO7Hmx4CVb26VfBEtr4AT88Q6maESheoz2Qs_6QtOQFzYIQRD2JmCSuZwwhYVuCaE="
+    ></cart-store>
+
+    <product-store></product-store>
+    
+    <main class="Main">
+        <div class="Page">
+            <section class="Header Header--home">
+                <nav class="Nav">
+
+                </nav>
+
+                    <img src="media\logohgblack.png" width="250" height="auto">
+                </a>
+            </section>
+            <section class="Box Box--default">
+                <header class="Box-header">
+                    <h2>Login:</h2>
+                </header>
+                <section class="Box-body">
+                    <form id="loginForm" onsubmit="return checkPswd(event)">
+                        <label for="pswd">Enter password: </label>
+                        <input type="password" id="pswd" class="box">
+                        <input type="button" value="Submit" class="confirm" onclick="submitForm()"> 
+                        <span id="tryAgainMsg"></span>
+                    </form>
+                    <br><br>
+                    <a href="https://www.youtube.com/@vampiresarereal" target="_blank" class="box-body" style="font-size: 0.83rem;">Forgot password?</a>
+                </section>
+            </section>
+        </div>
+    </main>
+
+    <script type="text/javascript">
+        var loggedIn = localStorage.getItem("loggedIn");
+        if (loggedIn === "true") {
+            window.location.href = "main.html";
+        }
+
+        function checkPswd(event) {
+            event.preventDefault();
+            submitForm();
+        }
+
+        function submitForm() {
+            fetch("passwords.json")
+                .then(response => response.json())
+                .then(data => {
+                    var enteredPassword = document.getElementById("pswd").value;
+                    var correctPassword = data.password;
+
+                    if (enteredPassword === correctPassword) {
+                        localStorage.setItem("loggedIn", "true");
+                        window.location.href = "main.html";
+                    } else {
+                        document.getElementById("tryAgainMsg").innerText = "Try again.";
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching password:", error);
+                });
+        }
+
+        // Desativar o menu de contexto do botão direito
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+        });
+
+        // Desativar o atalho do teclado Ctrl+Shift+I
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey && event.shiftKey && event.key === 'I') {
+                event.preventDefault();
+            }
+        });
+
+        // Desativar clique do botão direito do mouse
+        document.addEventListener('mousedown', function(event) {
+            if (event.button === 2) {
+                event.preventDefault();
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="yotsuba">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="media\hgbicon.ico" type="image/x-icon"/>
+    <title>@hgb</title>
+    <link rel="stylesheet" href="assets\css\style.css">
+</head>
+<body>
+
+    <script>
+        // Check if the user is logged in
+        var loggedIn = localStorage.getItem("loggedIn");
+        if (!loggedIn) {
+            // If not logged in, redirect to index.html
+            window.location.href = "index.html";
+        }
+
+        function logout() {
+            // Remove the login status from local storage
+            localStorage.removeItem("loggedIn");
+            // Redirect to the login page
+            window.location.href = "index.html";
+        }
+
+        // Add target="_blank" attribute to links with images
+        document.addEventListener("DOMContentLoaded", function() {
+            var imageLinks = document.querySelectorAll('a[href$=".jpg"], a[href$=".jpeg"], a[href$=".png"], a[href$=".gif"]');
+            imageLinks.forEach(function(link) {
+                link.setAttribute("target", "_blank");
+            });
+        });
+    </script>
+
+
+    <cart-store
+        crsf-token-name="CRAFT_CSRF_TOKEN"
+        crsf-token="7TKosqPfh_X4TLtDBOL7nXzXXazH7PQ9uCN_m_GX3DOg708C4F808oZZ-sXwusOfwRP9NEiQrM8Nrg_-o4GxRN5LFsPEz59E158GNoUUZog="
+    ></cart-store>
+
+    <product-store></product-store>
+    
+    <main class="Main">
+        <div class="Page">
+            <section class="Header Header--home">
+                <nav class="Nav">
+                    <ul class="Nav-list">
+                        <li class="Nav-item">
+                            <a href="main.html" class="Nav-link">vampires</a>
+                        </li>
+                        <li class="Nav-item">
+                            <a href="main.html" class="Nav-link">are</a>
+                        </li>
+                        <li class="Nav-item">
+                            <a href="main.html" class="Nav-link">real</a>
+                        </li>
+                    </ul>
+
+                    <ul class="Nav-list">
+                        <li class="Nav-item">
+                            <a href="main.html">Home</a>
+                        </li>
+                    </ul>
+
+                    <ul class="Nav-list">
+                        <li class="Nav-item">
+                            <a href="index.html" onclick="logout()">Logout</a>
+                        </li>
+                    </ul>
+                
+                </nav>
+                <h1>
+                    <a href="4416.html">/d/ - Duo</a>
+                </h1>
+            </section>
+            <hr>
+
+                
+<section class="Thread Thread--full">
+
+        
+
+<section class="Post Post--op">
+
+    <div class="Post-body">
+
+        
+                        <div class="Post-fileMeta">
+                File: <a href="media\mavgay.png"> iD^49.jpeg</a> (227 KB)
+            </div>
+
+                        <a href="media\mavgay.png">
+                            <file-preview class="FilePreview" type="image" preview-src="media\mavgay.png"></file-preview>
+                        </a>
+
+        
+                <header class="Post-header">
+            <span class="Post-title">CHIMERA</span>
+            <span class="Post-name">basictroll</span>
+            11/25/2023(Sat)02:11:00 No.4416
+                    </header>
+
+                <section class="Post-comment">
+            ipsum dolor sit amet, consectetur adipiscing elitt<br>
+uspendisse dictum orci quis neque.<br>
+reuspendisse quis nequey.
+
+                                </section>
+
+    </div>
+
+</section>
+    
+        
+        
+<section class="Post Post--reply">
+
+    <div class="Post-body">
+
+                <header class="Post-header">
+            <input type="checkbox">
+            <span class="Post-name">Anonymous</span>
+            11/25/2023(Sat)02:11:55 No.4444
+        </header>
+
+                
+                        <div class="Post-fileMeta">
+                File: <a href="media\mavshark.jpg"> e5X2|.jpeg</a> (192 KB)
+            </div>
+
+                        <a href="media\mavshark.jpg">
+                            <file-preview class="FilePreview" type="image" preview-src="media\mavshark.jpg"></file-preview>
+                        </a>
+
+                
+                
+            <section class="Post-comment">
+                uspendisse dictum orci quis neque
+            </section>
+
+                
+    </div>
+
+</section>        
+    
+        
+<section class="Post Post--reply">
+
+    <div class="Post-body">
+
+                <header class="Post-header">
+            <input type="checkbox">
+            <span class="Post-name">Anonymous</span>
+            11/25/2023(Sat)02:11:55 No.4445
+        </header>
+
+                
+                        <div class="Post-fileMeta">
+                File: <a href="media/mN.png"> 2'RqW.jpeg</a> (213 KB)
+            </div>
+
+                        <a href="media\distorted.jpg">
+                            <file-preview class="FilePreview" type="image" preview-src="media\distorted.jpg"></file-preview>
+                        </a>
+
+                
+                
+            <section class="Post-comment">
+            
+            </section>
+
+                
+    </div>
+
+</section>        
+    
+</section>
+    </div>
+	</main>
+
+	<script src="assets/js/main.js@v=36775574"></script>
+    
+</body>
+</html>
