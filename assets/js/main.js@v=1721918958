@@ -438,7 +438,7 @@
 
 // Adiciona a função para abrir o link quando clicado na imagem esquerda
 document.getElementById("left-image").onclick = function() {
-    window.open("https://www.youtube.com/@vampiresarereal", "_blank");
+    window.open("https://www.instagram.com/p/C3gwdL9gxFt/", "_blank");
 };
 
 // Adiciona a função para abrir o link quando clicado na imagem direita
