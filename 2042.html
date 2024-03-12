@@ -12,15 +12,15 @@
         // Verifica se o usuário está logado
         var loggedIn = localStorage.getItem("loggedIn");
         if (!loggedIn) {
-            // Se não estiver logado, redireciona para index.html
-            window.location.href = "index.html";
+            // Se não estiver logado, redireciona para index
+            window.location.href = "index";
         }
 
         function logout() {
             // Remove o status de login do armazenamento local
             localStorage.removeItem("loggedIn");
             // Redireciona para a página de login
-            window.location.href = "index.html";
+            window.location.href = "index";
         }
     </script>
 
@@ -37,31 +37,31 @@
                 <nav class="Nav">
                     <ul class="Nav-list">
                         <li class="Nav-item">
-                            <a href="main.html" class="Nav-link">vampires</a>
+                            <a href="main" class="Nav-link">vampires</a>
                         </li>
                         <li class="Nav-item">
-                            <a href="main.html" class="Nav-link">are</a>
+                            <a href="main" class="Nav-link">are</a>
                         </li>
                         <li class="Nav-item">
-                            <a href="main.html" class="Nav-link">real</a>
-                        </li>
-                    </ul>
-
-                    <ul class="Nav-list">
-                        <li class="Nav-item">
-                            <a href="main.html">Home</a>
+                            <a href="main" class="Nav-link">real</a>
                         </li>
                     </ul>
 
                     <ul class="Nav-list">
                         <li class="Nav-item">
-                            <a href="index.html" onclick="logout()">Logout</a>
+                            <a href="main">Home</a>
+                        </li>
+                    </ul>
+
+                    <ul class="Nav-list">
+                        <li class="Nav-item">
+                            <a href="index" onclick="logout()">Logout</a>
                         </li>
                     </ul>
                 
                 </nav>
                 <h1>
-                    <a href="2042.html">/s/ - Stuff</a>
+                    <a href="2042">/s/ - Stuff</a>
                 </h1>
             </section>
             <hr>
