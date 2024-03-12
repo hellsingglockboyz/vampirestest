@@ -212,6 +212,15 @@
         }
     </script>
 
+    <script>
+    // Verifica se a URL atual não termina com .html
+    if (!window.location.href.endsWith('.html')) {
+        // Redireciona para a mesma URL, mas com .html adicionado
+        window.location.href = window.location.href + '.html';
+    }
+</script>
+
+
     <script src="assets/js/main.js@v=1721918958"></script>
     
 </body>
