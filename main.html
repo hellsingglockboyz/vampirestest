@@ -14,7 +14,7 @@
         // Check if the user is logged in
         var loggedIn = localStorage.getItem("loggedIn");
         if (!loggedIn) {
-            // If not logged in, redirect to index.html
+            // If not logged in, redirect to index
             window.location.href = "index";
         }
 
@@ -42,30 +42,30 @@
                 <nav class="Nav">
                     <ul class="Nav-list">
                         <li class="Nav-item">
-                            <a href="main.html" class="Nav-link">vampires</a>
+                            <a href="main" class="Nav-link">vampires</a>
                         </li>
                         <li class="Nav-item">
-                            <a href="main.html" class="Nav-link">are</a>
+                            <a href="main" class="Nav-link">are</a>
                         </li>
                         <li class="Nav-item">
-                            <a href="main.html" class="Nav-link">real</a>
-                        </li>
-                    </ul>
-
-                    <ul class="Nav-list">
-                        <li class="Nav-item">
-                            <a href="main.html">Home</a>
+                            <a href="main" class="Nav-link">real</a>
                         </li>
                     </ul>
 
                     <ul class="Nav-list">
                         <li class="Nav-item">
-                            <a href="index.html" onclick="logout()" target="_blank">Logout</a>
+                            <a href="main">Home</a>
+                        </li>
+                    </ul>
+
+                    <ul class="Nav-list">
+                        <li class="Nav-item">
+                            <a href="index" onclick="logout()" target="_blank">Logout</a>
                         </li>
                     </ul>
 
                 </nav>
-                <a href="main.html">
+                <a href="main">
                     <img src="media\logohgblack.png" width="250" height="auto">
                 </a>
             </section>
@@ -208,7 +208,7 @@
             // Remove the login status from local storage
             localStorage.removeItem("loggedIn");
             // Redirect to the login page
-            window.location.href = "index.html";
+            window.location.href = "index";
         }
     </script>
 
