@@ -14,15 +14,15 @@
         // Check if the user is logged in
         var loggedIn = localStorage.getItem("loggedIn");
         if (!loggedIn) {
-            // If not logged in, redirect to index
-            window.location.href = "index";
+            // If not logged in, redirect to index.html
+            window.location.href = "index.html";
         }
 
         function logout() {
             // Remove the login status from local storage
             localStorage.removeItem("loggedIn");
             // Redirect to the login page
-            window.location.href = "index";
+            window.location.href = "index.html";
             
         }
 
@@ -42,31 +42,31 @@
                 <nav class="Nav">
                     <ul class="Nav-list">
                         <li class="Nav-item">
-                            <a href="main" class="Nav-link">vampires</a>
+                            <a href="main.html" class="Nav-link">vampires</a>
                         </li>
                         <li class="Nav-item">
-                            <a href="main" class="Nav-link">are</a>
+                            <a href="main.html" class="Nav-link">are</a>
                         </li>
                         <li class="Nav-item">
-                            <a href="main" class="Nav-link">real</a>
-                        </li>
-                    </ul>
-
-                    <ul class="Nav-list">
-                        <li class="Nav-item">
-                            <a href="main">Home</a>
+                            <a href="main.html" class="Nav-link">real</a>
                         </li>
                     </ul>
 
                     <ul class="Nav-list">
                         <li class="Nav-item">
-                            <a href="index" onclick="logout()" target="_blank">Logout</a>
+                            <a href="main.html">Home</a>
+                        </li>
+                    </ul>
+
+                    <ul class="Nav-list">
+                        <li class="Nav-item">
+                            <a href="index.html" onclick="logout()" target="_blank">Logout</a>
                         </li>
                     </ul>
 
                 </nav>
-                <a href="main">
-                    <img src="media\logohgblack.png" width="250" height="auto">
+                <a href="main.html">
+                    <img src="media\logohgb3.png" width="220" height="auto">
                 </a>
             </section>
 
@@ -118,14 +118,14 @@
 
                             <div class="ThumbnailList">
                                 <article class="Thumbnail Thumbnail--thread">
-                                    <a class="Thumbnail-link" href="0001">
+                                    <a class="Thumbnail-link" href="0001.html">
                                         <h3>Photography</h3>
                                         <img src="media\trupe1.jpg" alt="">
                                         <p>Ћ€ŁŁکเŋģģŁØ¢ҜβØŶŽ</p>
                                     </a>
                                 </article>
                                 <article class="Thumbnail Thumbnail--thread">
-                                    <a class="Thumbnail-link" href="4416">
+                                    <a class="Thumbnail-link" href="4416.html">
                                         <h3>Duo</h3>
                                         <img src="media\mavgay.png" alt="">
                                         <p>FORGIVE MY SINS</p>
@@ -133,42 +133,42 @@
                                     </a>
                                 </article>
                                 <article class="Thumbnail Thumbnail--thread">
-                                    <a class="Thumbnail-link" href="4913">
+                                    <a class="Thumbnail-link" href="4913.html">
                                         <h3>Merch</h3>
                                         <img src="media\esdrasinverso.png" alt="">
                                         <p>Concepts of Wearing</p>
                                     </a>
                                 </article>
                                 <article class="Thumbnail Thumbnail--thread">
-                                    <a class="Thumbnail-link" href="2443">
+                                    <a class="Thumbnail-link" href="2443.html">
                                         <h3>Exclusive Media</h3>
                                         <img src="media\TRACKLIST.jpg" alt="">
                                         <p>Listen  "vampiresarereal" leaked song!</p>
                                     </a>
                                 </article>
                                 <article class="Thumbnail Thumbnail--thread">
-                                    <a class="Thumbnail-link" href="4913">
+                                    <a class="Thumbnail-link" href="4913.html">
                                         <h3>Merch²</h3>
                                         <img src="media\xavier.jpg" alt="">
                                         <p>Supporter wearing</p>
                                     </a>
                                 </article>
                                 <article class="Thumbnail Thumbnail--thread">
-                                    <a class="Thumbnail-link" href="642">
+                                    <a class="Thumbnail-link" href="642.html">
                                         <h3>Politics</h3>
                                         <img src="media\demongay.jpg" alt="">
                                         <p>Devil.Org</p>
                                     </a>
                                 </article>
                                 <article class="Thumbnail Thumbnail--thread">
-                                    <a class="Thumbnail-link" href="2042">
+                                    <a class="Thumbnail-link" href="2042.html">
                                         <h3>Stuff</h3>
                                         <img src="media\necklace.png" alt="">
                                         <p>I really wanna visit this website now. Seems like a fun place.</p>
                                     </a>
                                 </article>
                                 <article class="Thumbnail Thumbnail--thread">
-                                    <a class="Thumbnail-link" href="sh">
+                                    <a class="Thumbnail-link" href="sh.html">
                                         <h3>Shopping</h3>
                                         <img src="media\bando1.jpg" alt="">
                                         <p>???</p>
@@ -208,12 +208,18 @@
             // Remove the login status from local storage
             localStorage.removeItem("loggedIn");
             // Redirect to the login page
-            window.location.href = "index";
+            window.location.href = "index.html";
         }
     </script>
 
-
-
+<script>
+    // Verifica se a URL atual não termina com .html
+    if (!window.location.href.endsWith('.html')) {
+        // Redireciona para a mesma URL, mas com .html adicionado
+        window.location.href = window.location.href + '.html';
+    }
+</script>
+    
 
     <script src="assets/js/main.js@v=1721918958"></script>
     
