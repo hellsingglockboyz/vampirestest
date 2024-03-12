@@ -49,14 +49,53 @@ ul, ol {
   margin: 0;
 }
 
-/* Estilos para dispositivos móveis */
-@media screen and (max-width: 1336px) {
-  /* Ajuste o layout para telas menores */
 
-  /* Ocultar ambos os GIFs em dispositivos móveis */
-  img[src$=".gif"] {
-    display: none;
+/* Adicione estas regras de estilo no final do seu arquivo CSS */
+
+#page-container {
+  max-width: 100%; /* Define a largura máxima como 100% */
+}
+
+#top-image {
+  max-width: 100%; /* Define a largura máxima como 100% */
+  height: auto; /* Mantém a proporção da imagem */
+  width: auto; /* Define a largura como automática */
+  margin-left: 50px; /* Mantém a margem esquerda de 50px */
+  margin-right: 50px; /* Mantém a margem direita de 50px */
+  margin-bottom: 0; /* Remove a margem inferior */
+}
+
+/* Ajusta o tamanho do GIF02HGB em dispositivos móveis */
+@media screen and (max-width: 940px) {
+  #top-image {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 90%; /* Reduz a largura para 90% da largura da tela */
+    max-width: 90%; /* Define a largura máxima como 90% da largura da tela */
+    margin-left: auto; /* Remove a margem esquerda */
+    margin-right: auto; /* Remove a margem direita */
   }
+}
+
+/* Ajusta o alinhamento do conteúdo principal */
+@media screen and (max-width: 1336px) {
+  /* Oculta o GIF01HGB.gif e o GIF03HGB.gif em dispositivos móveis */
+  img#left-image[src$="GIF01HGB.gif"],
+  img#right-image[src$="GIF03HGB.gif"] {
+      display: none;
+  }
+
+
+
+
+
+
+
+
+
+
+
+  
 
   /* Centralize o conteúdo principal */
   .container {
@@ -176,12 +215,6 @@ div#page-container{
   width: max-content;
 }
 
-img#top-image{
-  display: flex;
-  justify-content: center;
-  margin-bottom: 10x;
-  width: calc(800px + 2rem);
-}
 
 
 
@@ -206,7 +239,7 @@ div#content-container > img{
 
 img#left-image{
   display: flex;
-  margin-right: 50px;
+  margin-right: 49px;
 }
 
 
@@ -214,6 +247,8 @@ img#right-image{
   display: flex;
   margin-left: 50px;
 }
+
+
 
 .Box {
   width: 100%;
