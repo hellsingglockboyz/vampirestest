@@ -35,7 +35,7 @@
 
                 </nav>
 
-                    <img src="media\logohgb6.png" width="250" height="auto">
+                    <img src="media\logohgb5.png" width="280" height="auto">
                 </a>
             </section>
             <section class="Box Box--default">
@@ -50,7 +50,7 @@
                         <span id="tryAgainMsg"></span>
                     </form>
                     <br><br>
-                    <a href="https://www.instagram.com/p/C4a4DumgwaV/" target="_blank" class="box-body" style="font-size: 0.83rem;">Forgot password?</a>
+                    <a href="https://www.youtube.com/@vampiresarereal" target="_blank" class="box-body" style="font-size: 0.83rem;">Forgot password?</a>
                 </section>
             </section>
         </div>
@@ -59,7 +59,7 @@
     <script type="text/javascript">
         var loggedIn = localStorage.getItem("loggedIn");
         if (loggedIn === "true") {
-            window.location.href = "main";
+            window.location.href = "main.html";
         }
 
         function checkPswd(event) {
@@ -76,7 +76,7 @@
 
                     if (enteredPassword === correctPassword) {
                         localStorage.setItem("loggedIn", "true");
-                        window.location.href = "main";
+                        window.location.href = "main.html";
                     } else {
                         document.getElementById("tryAgainMsg").innerText = "Try again.";
                     }
