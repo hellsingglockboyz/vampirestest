@@ -57,15 +57,16 @@
     </main>
 
 <script type="module">
-    import { Analytics } from "lib/@vercel/analytics/dist/react";
+    import { Analytics } from "lib/@vercel/analytics/dist/react/index.js";
     const analytics = new Analytics();
     analytics.page();
 </script>
 
+
     <script type="text/javascript">
         var loggedIn = localStorage.getItem("loggedIn");
         if (loggedIn === "true") {
-            window.location.href = "main.html";
+            window.location.href = "main";
         }
 
         function checkPswd(event) {
@@ -82,7 +83,7 @@
 
                     if (enteredPassword === correctPassword) {
                         localStorage.setItem("loggedIn", "true");
-                        window.location.href = "main.html";
+                        window.location.href = "main";
                     } else {
                         document.getElementById("tryAgainMsg").innerText = "Try again.";
                     }
