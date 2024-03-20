@@ -443,7 +443,7 @@ document.getElementById("left-image").onclick = function() {
 
 // Adiciona a função para abrir o link quando clicado na imagem direita
 document.getElementById("right-image").onclick = function() {
-    window.open("https://hellsingglockboyz.bandcamp.com/", "_blank");
+    window.open("https://soundcloud.com/hellsingglockboyz", "_blank");
 };
 
 // Adiciona o estilo de cursor indicando que a imagem é clicável
