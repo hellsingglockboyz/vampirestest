@@ -55,16 +55,11 @@
         </div>
     </main>
 
-<script type="module">
-    import { inject } from "lib/@vercel/analytics/dist/react/index.js";
-    inject();
+<!-- Script de análise fornecido pelo Vercel -->
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
 </script>
-
-<script type="module">
-    import { Analytics } from "lib/@vercel/analytics/dist/react/index.js";
-    const analytics = new Analytics();
-    analytics.page();
-</script>
+<script defer src="/_vercel/insights/script.js"></script>
 
 <script type="text/javascript">
     var loggedIn = localStorage.getItem("loggedIn");
