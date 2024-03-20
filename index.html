@@ -56,11 +56,11 @@
         </div>
     </main>
 
-        <script type="module">
-        import { Analytics } from "lib/analytics/react";
-        const analytics = new Analytics();
-        analytics.page();
-    </script>
+<script type="module">
+    import { Analytics } from "lib/@vercel/analytics/dist/react";
+    const analytics = new Analytics();
+    analytics.page();
+</script>
 
     <script type="text/javascript">
         var loggedIn = localStorage.getItem("loggedIn");
