@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="media\hgbicon.ico" type="image/x-icon"/>
+    <link rel="icon" href="media/hgbicon.ico" type="image/x-icon"/>
     <title>@hgb</title>
     <link rel="stylesheet" href="assets/css/style1.css">
     <style>
@@ -35,8 +35,7 @@
 
                 </nav>
 
-                    <img src="media\logohgb5.png" width="280" height="auto">
-                </a>
+                <img src="media/logohgb5.png" width="280" height="auto">
             </section>
             <section class="Box Box--default">
                 <header class="Box-header">
@@ -57,61 +56,65 @@
     </main>
 
 <script type="module">
-    import { Analytics } from "lib/@vercel/analytics/dist/react/index.js";
+    import { inject } from "./lib/@vercel/analytics/dist/react/index.js";
+    inject();
+</script>
+
+<script type="module">
+    import { Analytics } from "./lib/@vercel/analytics/dist/react/index.js";
     const analytics = new Analytics();
     analytics.page();
 </script>
 
+<script type="text/javascript">
+    var loggedIn = localStorage.getItem("loggedIn");
+    if (loggedIn === "true") {
+        window.location.href = "main";
+    }
 
-    <script type="text/javascript">
-        var loggedIn = localStorage.getItem("loggedIn");
-        if (loggedIn === "true") {
-            window.location.href = "main";
-        }
+    function checkPswd(event) {
+        event.preventDefault();
+        submitForm();
+    }
 
-        function checkPswd(event) {
+    function submitForm() {
+        fetch("passwords.json")
+            .then(response => response.json())
+            .then(data => {
+                var enteredPassword = document.getElementById("pswd").value;
+                var correctPassword = data.password;
+
+                if (enteredPassword === correctPassword) {
+                    localStorage.setItem("loggedIn", "true");
+                    window.location.href = "main";
+                } else {
+                    document.getElementById("tryAgainMsg").innerText = "Try again.";
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching password:", error);
+            });
+    }
+
+    // Desativar o menu de contexto do botão direito
+    document.addEventListener('contextmenu', function(event) {
+        event.preventDefault();
+    });
+
+    // Desativar o atalho do teclado Ctrl+Shift+I
+    document.addEventListener('keydown', function(event) {
+        if (event.ctrlKey && event.shiftKey && event.key === 'I') {
             event.preventDefault();
-            submitForm();
         }
+    });
 
-        function submitForm() {
-            fetch("passwords.json")
-                .then(response => response.json())
-                .then(data => {
-                    var enteredPassword = document.getElementById("pswd").value;
-                    var correctPassword = data.password;
-
-                    if (enteredPassword === correctPassword) {
-                        localStorage.setItem("loggedIn", "true");
-                        window.location.href = "main";
-                    } else {
-                        document.getElementById("tryAgainMsg").innerText = "Try again.";
-                    }
-                })
-                .catch(error => {
-                    console.error("Error fetching password:", error);
-                });
-        }
-
-        // Desativar o menu de contexto do botão direito
-        document.addEventListener('contextmenu', function(event) {
+    // Desativar clique do botão direito do mouse
+    document.addEventListener('mousedown', function(event) {
+        if (event.button === 2) {
             event.preventDefault();
-        });
-
-        // Desativar o atalho do teclado Ctrl+Shift+I
-        document.addEventListener('keydown', function(event) {
-            if (event.ctrlKey && event.shiftKey && event.key === 'I') {
-                event.preventDefault();
-            }
-        });
-
-        // Desativar clique do botão direito do mouse
-        document.addEventListener('mousedown', function(event) {
-            if (event.button === 2) {
-                event.preventDefault();
-            }
-        });
-    </script>
+        }
+    });
+</script>
 
 </body>
 </html>
