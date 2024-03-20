@@ -13,7 +13,7 @@
         }
 
         img {
-            user-drag: none;
+            -user-drag: none;
             -webkit-user-drag: none;
         }
         
@@ -104,6 +104,12 @@
                 event.preventDefault();
             }
         });
+    </script>
+
+        <script type="module">
+        import { Analytics } from "@vercel/analytics/react";
+        const analytics = new Analytics();
+        analytics.page();
     </script>
 
 </body>
