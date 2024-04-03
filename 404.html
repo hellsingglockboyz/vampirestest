@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="media\icon3.ico" type="image/x-icon"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<title>Error 404 - Page Not Found</title>
+<link rel="stylesheet" href="assets/css/style2.css">
+<style>
+    body {
+        background-color: #000;
+    }
+
+    .content {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        color: #fff;
+        padding: 20px;
+        margin-top: 20vh; /* Ajuste na margem superior */
+    }
+
+    h1 {
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .back-to-home {
+        margin-top: 20px;
+    }
+
+    .back-to-home a {
+        color: #fff;
+        text-decoration: none;
+        border: 2px solid #fff;
+        padding: 10px 20px;
+        transition: all 0.3s ease;
+    }
+
+    .back-to-home a:hover {
+        background-color: #fff;
+        color: #000;
+    }
+</style>
+</head>
+<body>
+    <div class="video-container">
+        <video autoplay loop id="background-video" playsinline>
+            <source src="media/comp2.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <div class="content">
+        <h1>Error 404</h1>
+        <p>The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
+        <div class="back-to-home"> <br><br><br>
+            <a href="/">Back to Home</a>
+        </div>
+    </div>
+    <script src="assets/js/script3.js"></script>
+</body>
+</html>
