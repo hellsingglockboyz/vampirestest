@@ -1,6 +1,6 @@
 {
-    "rewrites": [
-      { "source": "/leaks", "destination": "/leaks.html" }
-    ]
-  }
-  
+  "rewrites": [
+    { "source": "/leaks", "destination": "/leaks.html" },
+    { "source": "/forum/index", "destination": "/forum/index.html" }
+  ]
+}
