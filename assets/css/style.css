@@ -39,7 +39,7 @@ video {
 }
 
 .logo-container {
-    margin-top: calc(25vh - 240px); /* Ajuste na margem superior */
+    margin-top: calc(25vh - 300px); /* Ajuste na margem superior */
 }
 
 .links-container {
@@ -65,41 +65,7 @@ video {
 
 
 
-@keyframes flicker {
-    0% {
-        opacity: 1;
-        transform: translate(0, 0); 
-    }
-    25% {
-        opacity: 0.7;
-        transform: translate(5px, 5px); 
-    }
-    50% {
-        opacity: 1;
-        transform: translate(0, 0);
-    }
-    75% {
-        opacity: 0.9;
-        transform: translate(-5px, -5px);
-    }
-    100% {
-        opacity: 1;
-        transform: translate(0, 0);
-    }
-}
 
-
-@keyframes flicker {
-    0% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.5;
-    }
-    100% {
-        opacity: 1;
-    }
-}
 
 
 
